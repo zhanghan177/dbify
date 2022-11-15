@@ -106,7 +106,10 @@ def dbify(db_name, table, db_server=None, skip_duplicates=False):
             return 'TINYINT'
 
         elif isinstance(val, int):
-            return 'INT'
+            if val.bit_length() < 31:
+                return 'INT'
+            else:
+                return 'BIGINT'
 
         elif isinstance(val, float):
             return 'FLOAT'
